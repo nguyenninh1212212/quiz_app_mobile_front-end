@@ -38,7 +38,9 @@ const LibraryScreen = () => {
   const renderTabContent = () => (
     <>
       <View style={styles.filterSection}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ justifyContent: "center" }}
+        >
           <TouchableOpacity
             style={[
               styles.filterButton,
@@ -69,7 +71,7 @@ const LibraryScreen = () => {
       </View>
 
       <FlatList
-        className="bg-red-500 flex justify-center"
+        className="bg-red-500 flex "
         data={fakeQuizData}
         renderItem={({ item }) => (
           <View className="px-2">
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#2a3164",
-    justifyContent: "center",
+   justifyContent: "center",
     padding: 10,
   },
   header: {
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
   listContainer: {
     flexDirection: "column",
     paddingBottom: 16,
-    justifyContent: "space-around",
+   justifyContent: "space-around",
     alignContent: "center",
     marginRight: 16,
   },

@@ -3,7 +3,15 @@ import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
-const questions = [
+// Define types for our quiz data
+interface Question {
+  id: number;
+  question: string;
+  options: string[];
+  correctAnswer: string;
+}
+
+const questions: Question[] = [
   {
     id: 1,
     question: "An angle whose value is ___, is called a complete angle.",
@@ -21,9 +29,9 @@ const questions = [
 const QuizScreen = () => {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [timeLeft, setTimeLeft] = useState(120); // 2 phút (120 giây)
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(Array(questions.length).fill(null));
+  const [timeLeft, setTimeLeft] = useState<number>(120); // 2 phút (120 giây)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -36,25 +44,49 @@ const QuizScreen = () => {
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      setSelectedAnswer(null);
     }
   };
 
   const handlePrev = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
-      setSelectedAnswer(null);
     }
   };
 
+  // Update the answer selection handler with type
+  const handleAnswerSelect = (option: string) => {
+    const newSelectedAnswers = [...selectedAnswers];
+    newSelectedAnswers[currentQuestion] = option;
+    setSelectedAnswers(newSelectedAnswers);
+  };
+  
+  // Fix the countCorrectAnswers function
+  const countCorrectAnswers = (): number => {
+    return questions.filter(
+      (q, index) => q.correctAnswer === selectedAnswers[index]
+    ).length;
+  };
+  
+  // Submit function
   const handleSubmit = () => {
-    router.push("/");
+    const correctAnswers = countCorrectAnswers();
+    const score = correctAnswers * 10; // 10 points per correct answer
+    const totalQuestions = questions.length;
+  
+    router.push({
+      pathname: "/(Exam)/detail/result",
+      params: {
+        score: `${score}`,
+        correctAnswers: `${correctAnswers}`,
+        totalQuestions: `${totalQuestions}`,
+      },
+    });
   };
 
   return (
     <SafeAreaView className="flex-1 bg-[#0D1440]">
       {/* Header */}
-      <View className=" px-4 py-6 h-5/6 flex-col justify-between">
+      <View className="px-4 py-6 h-5/6 flex-col justify-between">
         <View className="flex-row justify-between items-center">
           <TouchableOpacity className="w-[30%]" onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color="white" />
@@ -82,18 +114,18 @@ const QuizScreen = () => {
           </Text>
         </View>
 
-        {/* Đáp án */}
+        {/* Đáp án - UPDATED */}
         {questions[currentQuestion].options.map((option, index) => (
           <TouchableOpacity
             key={index}
             className={`p-3 rounded-lg mt-2 border-2 ${
-              selectedAnswer === option
+              selectedAnswers[currentQuestion] === option
                 ? option === questions[currentQuestion].correctAnswer
                   ? "bg-green-500 border-green-700"
                   : "bg-red-500 border-red-700"
                 : "bg-indigo-800 border-indigo-600"
             }`}
-            onPress={() => setSelectedAnswer(option)}
+            onPress={() => handleAnswerSelect(option)}
           >
             <Text className="text-white text-lg">{option}</Text>
           </TouchableOpacity>
