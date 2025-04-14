@@ -53,7 +53,6 @@ const QuizScreen = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-[#0D1440]">
-      {/* Header */}
       <View className=" px-4 py-6 h-5/6 flex-col justify-between">
         <View className="flex-row justify-between items-center">
           <TouchableOpacity className="w-[30%]" onPress={() => router.back()}>
