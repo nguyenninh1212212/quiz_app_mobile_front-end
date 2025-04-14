@@ -1,20 +1,32 @@
+import { ICourse, QuizCardCreateProps } from "@/type/Card";
 import { useRouter } from "expo-router";
 import React, { useCallback } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
 
-const QuizCard = () => {
+interface IPayload {
+  data: ICourse;
+}
+
+const QuizCard: React.FC<IPayload> = ({ data }) => {
   const router = useRouter();
-  const handlePress = useCallback(() => {
+  
+  const handleCardPress = useCallback(() => {
     router.push({
       pathname: "/Exam/[id]",
       params: { id: "456" },
     });
   }, [router]);
+  
+  const handleProfilePress = useCallback(() => {
+    console.log("Avatar clicked, navigating to Channel");
+    router.push("/(tabs)/Channel");
+  }, [router]);
+
   return (
     <TouchableOpacity
-      className="bg-white rounded-xl py-1 my-3 px-2  shadow-lg"
-      onPress={handlePress}
+      className="bg-white rounded-xl py-1 my-3 px-2 shadow-lg"
+      onPress={handleCardPress}
     >
       <View className="flex-row items-center">
         {/* Hình ảnh logo bên trái */}
@@ -32,10 +44,13 @@ const QuizCard = () => {
             What is HTML, CSS?
           </Text>
           <View className="flex-row items-center mt-2">
-            <Avatar.Image
-              source={{ uri: "https://randomuser.me/api/portraits/men/1.jpg" }}
-              size={30}
-            />
+            {/* Make the avatar clickable */}
+            <TouchableOpacity onPress={handleProfilePress}>
+              <Avatar.Image
+                source={{ uri: "https://randomuser.me/api/portraits/men/1.jpg" }}
+                size={30}
+              />
+            </TouchableOpacity>
             <View className="ml-3">
               <Text className="text-xs font-semibold text-gray-800">
                 Nguyễn Văn B
@@ -53,5 +68,7 @@ const QuizCard = () => {
     </TouchableOpacity>
   );
 };
+
+console.log("🚀 ~ QuizCard ~ QuizCard:", QuizCard);
 
 export default QuizCard;

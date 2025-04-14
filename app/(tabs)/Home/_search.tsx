@@ -46,7 +46,7 @@ const SearchScreen = () => {
         <Text className="text-white font-bold text-lg mb-3">Kết quả</Text>
         <ScrollView className="space-y-3">
           {[...Array(4)].map((_, index) => (
-            <QuizCard key={index} />
+            <QuizCard key={index }  />
           ))}
         </ScrollView>
       </View>
