@@ -1,9 +1,14 @@
+import { ICourse, QuizCardCreateProps } from "@/type/Card";
 import { useRouter } from "expo-router";
 import React, { useCallback } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
 
-const QuizCard = () => {
+interface IPayload {
+  data: ICourse;
+}
+
+const QuizCard: React.FC<IPayload> = ({ data }) => {
   const router = useRouter();
   const handlePress = useCallback(() => {
     router.push({
@@ -53,5 +58,6 @@ const QuizCard = () => {
     </TouchableOpacity>
   );
 };
+console.log("🚀 ~ QuizCard ~ QuizCard:", QuizCard);
 
 export default QuizCard;

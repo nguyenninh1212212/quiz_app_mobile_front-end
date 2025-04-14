@@ -1,6 +1,6 @@
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import React, { useState } from "react";
-import { View, Platform, ViewStyle } from "react-native";
+import { View, Platform, ViewStyle, TouchableOpacity } from "react-native";
 import { HapticTab } from "@/components/HapticTab";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -53,13 +53,15 @@ export default function TabLayout() {
         name="Exam"
         options={{
           tabBarIcon: () => (
-            <View
-              className={`bg-[#454e91] h-20 items-center w-20 justify-center relative -top-7 rounded-full`}
-            >
-              <View className="h-16 w-16 bg-[#ffd800] items-center justify-center rounded-full">
-                <Ionicons name="add" size={50} color={"white"} />
+            <TouchableOpacity onPress={() => router.push("/(tabs)/Exam/create_exam")}>
+              <View
+                className="bg-[#454e91] h-20 items-center w-20 justify-center relative -top-7 rounded-full"
+              >
+                <View className="h-16 w-16 bg-[#ffd800] items-center justify-center rounded-full">
+                  <Ionicons name="add" size={50} color={"white"} />
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ),
         }}
       />
@@ -68,7 +70,7 @@ export default function TabLayout() {
         name="Notification"
         options={{
           tabBarIcon: ({ focused }) => (
-            <Ionicons name="notifications" size={30} color={change(focused)} />
+              <Ionicons name="notifications" size={30} color={change(focused)} />
           ),
         }}
       />
@@ -77,7 +79,9 @@ export default function TabLayout() {
         name="Profile"
         options={{
           tabBarIcon: ({ focused }) => (
+            <TouchableOpacity onPress={() => router.push({ pathname: "/(tabs)/Profile/profile" })}>
             <Ionicons name="person-sharp" size={30} color={change(focused)} />
+            </TouchableOpacity>
           ),
         }}
       />

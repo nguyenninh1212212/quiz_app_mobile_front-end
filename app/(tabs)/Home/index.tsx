@@ -42,7 +42,7 @@ export default function HomeScreen() {
             {Array(3)
               .fill(null)
               .map((_, index) => (
-                <QuizCard key={index} />
+                <QuizCard key={index} data={_} />
               ))}
           </View>
 
