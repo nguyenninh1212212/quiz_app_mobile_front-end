@@ -1,6 +1,14 @@
 import { useRouter } from "expo-router";
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+} from "react-native";
 import { Avatar } from "react-native-paper";
 import QuizCard from "../Card/QuizCard"; // Adjust the import path as needed
 import { Ionicons } from "@expo/vector-icons"; // Make sure to install expo/vector-icons
@@ -15,7 +23,6 @@ const ChannelScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Curved header section */}
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
@@ -23,27 +30,27 @@ const ChannelScreen = () => {
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Người tạo đề</Text>
         </View>
-        
+
         <View style={styles.profileContainer}>
-          <Avatar.Image 
-            size={120} 
-            source={{ uri: "https://randomuser.me/api/portraits/men/1.jpg" }} 
+          <Avatar.Image
+            size={120}
+            source={{ uri: "https://randomuser.me/api/portraits/men/1.jpg" }}
             style={styles.avatar}
           />
           <Text style={styles.userName}>Trần Thị A</Text>
         </View>
       </View>
-      
+
       {/* Content section */}
       <View style={styles.contentContainer}>
         <Text style={styles.sectionTitle}>Đề thi</Text>
         <View className="flex-1 bg-[#303b5f] rounded-t-3xl px-4 pt-4 mx-[5px]">
-            {Array(3)
-              .fill(null)
-              .map((_, index) => (
-                <QuizCard key={index} data={_} />
-              ))}
-          </View>
+          {Array(3)
+            .fill(null)
+            .map((_, index) => (
+              <QuizCard key={index} data={_} />
+            ))}
+        </View>
       </View>
     </View>
   );
@@ -59,7 +66,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     paddingBottom: 20,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   header: {
     flexDirection: "row",
@@ -101,7 +108,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
     marginTop: 8,
-    color:"#ffff"
+    color: "#ffff",
   },
 });
 
